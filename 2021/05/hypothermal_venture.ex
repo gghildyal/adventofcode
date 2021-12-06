@@ -27,4 +27,22 @@ defmodule HypothermalVenture do
     |> Enum.reject(fn {_, v} -> v < 2 end)
     |> length()
   end
+
+  def expand_2([{x1, y1}, {x2, y2}]) do
+    cond do
+      x1 == x2 -> Enum.zip(List.duplicate(x1, Enum.count(y1..y2)), Enum.to_list(y1..y2))
+      y1 == y2 -> Enum.zip(Enum.to_list(x1..x2), List.duplicate(y1, Enum.count(x1..x2)))
+      true ->
+        res = Enum.zip(Enum.to_list(x1..x2), Enum.to_list(y1..y2))
+    end
+  end
+
+  def process_2 do
+    read_segments()
+    |> Enum.flat_map(&expand_2/1)
+    |> Enum.frequencies()
+    |> Enum.filter(fn {_, v} -> v > 1 end)
+    |> length()
+  end
+
 end
