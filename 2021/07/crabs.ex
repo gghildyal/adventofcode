@@ -23,4 +23,20 @@ defmodule AlignCrabs do
     |> Enum.map(&(align_cost(&1, inputs)))
     |> Enum.min()
   end
+
+  def align_cost_2(move_to, positions) do
+    positions
+      |> Enum.map(fn pos ->
+          steps = abs(pos - move_to)
+          (steps * (steps + 1)) / 2
+        end)
+      |> Enum.sum()
+  end
+
+  def process_2 do
+    inputs = read()
+    Enum.to_list(Enum.min(inputs)..Enum.max(inputs))
+    |> Enum.map(&(align_cost_2(&1, inputs)))
+    |> Enum.min()
+  end
 end
