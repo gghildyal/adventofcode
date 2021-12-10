@@ -39,13 +39,14 @@ defmodule SevenSegment do
   end
 
   def subset?(str_1, str_2) do
-    set_1 = MapSet.new(String.to_charlist(str_1))
-    set_2 = MapSet.new(String.to_charlist(str_2))
+    set_1 = str_1 |> String.to_charlist() |> MapSet.new()
+    set_2 = str_2 |> String.to_charlist() |> MapSet.new()
     MapSet.subset?(set_1, set_2)
   end
 
   def decode_codes_with_len_5(decoded, patterns) do
-    patterns |> Enum.reduce(decoded, fn pattern, acc ->
+    patterns
+    |> Enum.reduce(decoded, fn pattern, acc ->
       cond do
         subset?(Map.get(decoded, 7), pattern) ->
           Map.put(acc, 3, pattern)
@@ -58,7 +59,8 @@ defmodule SevenSegment do
   end
 
   def decode_codes_with_len_6(decoded, patterns) do
-    patterns |> Enum.reduce(decoded, fn pattern, acc ->
+    patterns
+    |> Enum.reduce(decoded, fn pattern, acc ->
         cond do
           subset?(Map.get(decoded, 7), pattern) == false ->
             Map.put(acc, 6, pattern)
